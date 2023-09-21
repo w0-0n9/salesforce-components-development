@@ -1,0 +1,15 @@
+<design:component >
+    <design:attribute name="toastTime"      label="Toast Time (ms)"  description="Toast Time" default="10000" min="3000" max="10000"/>
+    <design:attribute name="toastMode"      
+                      label="Toast Mode"       
+                      description="Toast Mode"
+                      datasource="dismissible,pester,sticky" default="dismissible" />
+    <design:attribute name="toastType"
+                      label="Toast Type"
+                      description="Toast Type"
+                      datasource="info, error, warning" />
+    <design:attribute name="showLockButton" label="Show Lock Button" description="Lock 버튼 표시 유무 (Only Modify All User)" default="true"/>
+    <design:attribute name="buttonVariant"
+                      label="Button Variant"
+                      datasource="brand, neutral, brand-outline, destructive, destructive-text, inverse, success" default="brand"/>
+</design:component>

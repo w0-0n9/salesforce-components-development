@@ -1,0 +1,52 @@
+<aura:component controller="GoogleNewsController" access="global">
+
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="isMobile" type="Boolean"/>
+
+    <aura:attribute name="title" type="String" default=""/>
+    <aura:attribute name="body" type="String" default=""/>
+
+    <aura:attribute name="myVal" type="String" />
+    <aura:attribute name="url" type="String" />
+    <aura:attribute name="urlTitle" type="String" />
+    <aura:attribute name="urlbool" type="Boolean" default="false" />
+    
+    <aura:method name="clickShare" action="{!c.clickShare}" access="PUBLIC"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    
+    <aura:if isTrue="{!v.showSpinner}">
+        <div class="slds-is-relative">
+            <lightning:spinner />
+        </div>
+    </aura:if>
+    
+    <div>
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" smallDeviceSize="6" largeDeviceSize="12" padding="around-small">
+                <div class="slds-var-p-top_xx-small">
+                    <lightning:inputRichText variant="bottom-toolbar" value="{!v.myVal}" placeholder="{!$Label.c.GOOGLENEWS_SHARENEWS_PLACEHOLDER_MSG}"
+                            formats="['bold','italic','underline','strike','clean','list']"></lightning:inputRichText>
+                </div>
+
+                <div class="slds-var-m-top_small">
+                    <div class="slds-box slds-box_x-small">
+                        <lightning:card title="{!v.urlTitle}" iconName="standard:link">
+                            <div class="slds-card__body slds-card__body_inner">
+                                <lightning:formattedUrl value="{!v.url}" tooltip="{!v.url}" target="_blank" />
+                            </div>
+                        </lightning:card>
+                    </div>
+                </div>
+
+                <div class="slds-var-m-top_small">
+                    <span><strong>&nbsp;{!$Label.c.GOOGLENEWS_SHARENEWS_SHAREWITH}</strong>&nbsp;&nbsp;{!$Label.c.GOOGLENEWS_SHARENEWS_FOLLOWER}</span>
+                </div>
+
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

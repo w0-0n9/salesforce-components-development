@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+    
+.player {
+    width: 640px;
+    height: 390px;
+}

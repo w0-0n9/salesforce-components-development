@@ -1,0 +1,7 @@
+.THIS .slds-card__header{
+    display: none;
+}
+
+.THIS .slds-card > article{
+    height: 80px;
+}

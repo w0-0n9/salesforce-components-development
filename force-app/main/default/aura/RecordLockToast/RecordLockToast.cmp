@@ -1,0 +1,28 @@
+<aura:component
+    controller="RecordLockController"
+    implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasSObjectName,force:hasRecordId"
+    access="GLOBAL">
+
+    <!-- [Attribute] -->
+    <aura:attribute name="isLocked" type="Boolean" default="false"/>
+    <aura:attribute name="lockString" type="String" default="{!v.isLocked ? 'unlock' : 'lock'}"/>
+    <aura:attribute name="lockLabel" type="String" default="{!v.isLocked ? $Label.c.COMM_MSG_LABEL_UNLOCK : $Label.c.COMM_MSG_LABEL_LOCK}"/>
+    <aura:attribute name="canModifyAll" type="Boolean" default="false"/>
+
+    <!-- [Design Attribute] -->
+    <aura:attribute name="toastTime"        type="Integer"  default="10000"/>
+    <aura:attribute name="toastMode"        type="String"   default="dismissible"/>
+    <aura:attribute name="toastType"        type="String"   default="info"/>
+    <aura:attribute name="showLockButton"   type="Boolean"  default="true"/>
+    <aura:attribute name="buttonVariant"    type="String"   default="brand"/>
+
+    <!-- [Handler] -->
+    <aura:handler name="init" value="{! this }" action="{! c.init }" />  
+    
+    <!-- UnLock/Lock Button -->
+    <aura:if isTrue="{!and(v.canModifyAll, v.showLockButton)}">
+        <div class="slds-path slds-text-align_center">
+          <lightning:button label="{!v.lockLabel}" iconName="{!'utility:'+v.lockString}" iconPosition="left"  variant="{!v.buttonVariant}" class="lockButton" onclick="{!c.handleClick}" />
+        </div>
+    </aura:if>
+</aura:component>

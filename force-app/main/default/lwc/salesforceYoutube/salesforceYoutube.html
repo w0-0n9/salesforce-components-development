@@ -1,0 +1,33 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 07-20-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+
+<template>
+  <lightning-card title="REALIZE YOUR VISION_Samsung SDS" icon-name="standard:video">
+    <!-- <template if:true={youtubeRecords.data}>
+      <template for:each={youtubeRecords.data} for:item="record">
+          <div key={record.Id}>
+            <iframe width="100%" height="700" src="https://www.youtube.com/embed/2InQXMNXBEE?autoplay=1&mute=1&controls=0&loop=1&playlist=2InQXMNXBEE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+            <iframe width="100%" height="700" src={record.URL__c} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            Youtube URL: {record.URL__c}
+          </div>
+      </template>
+    </template> -->
+
+    <div class="slds-m-around_medium">
+      <template if:true={youtubeURL.data}>
+        <iframe id="player2" width="100%" height="500" src={youtubeURL.data} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </template>
+      <template if:true={youtubeURL.error}>
+        {youtubeURL.error}
+      </template>
+    </div>
+
+    </lightning-card>
+
+</template>

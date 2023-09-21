@@ -1,0 +1,7 @@
+<design:component >
+    <design:attribute name="displayType" label="Display As" required="true" datasource="List,Carousel" default="List" />
+	<design:supportedFormFactors>
+        <design:supportedFormFactor type="Large"/>
+        <design:supportedFormFactor type="Small"/>
+    </design:supportedFormFactors>
+</design:component>

@@ -1,0 +1,22 @@
+.marquee.THIS {
+    width: 100%;
+    line-height: 50px;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: white;
+}
+ 
+.marquee.THIS p {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 20s linear infinite;
+    font-size:30px;
+    font-weight: bold;
+}
+ 
+@keyframes marquee {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}

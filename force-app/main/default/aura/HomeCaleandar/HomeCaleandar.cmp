@@ -1,0 +1,202 @@
+<aura:component 
+    controller="HomeCalendarController"
+    implements="force:appHostable,flexipage:availableForAllPageTypes" 
+    access="global" >
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!-- <aura:attribute name="months"           type="String[]"     default="['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']"/> -->
+    <aura:attribute name="months"           type="String[]"     default="[]"/>
+    <aura:attribute name="nYear"            type="Integer"      default="0"/>
+    <aura:attribute name="nMonth"           type="Integer"      default="0"/>
+    <aura:attribute name="yearMonth"        type="String"       default="May 2018"/>
+    <aura:attribute name="activity"         type="Object"       default="{}"/>
+    <aura:attribute name="todays"           type="Object[]"     default="[]"/>
+    <aura:attribute name="isMobile"         type="Boolean"      default="false"/>
+    <aura:attribute name="showSpinner"      type="Boolean"      default="false"/>
+    <aura:attribute name="selectedDate"     type="String"       default=""/>
+
+    <aura:attribute name="hasLine"          type="Boolean"      default="true"/>
+    <aura:attribute name="default_event"    type="Boolean"      default="true"/>
+    <aura:attribute name="default_task"     type="Boolean"      default="true"/>
+    <aura:attribute name="default_accPlan"  type="Boolean"      default="true"/>
+    <aura:attribute name="default_opptyAct" type="Boolean"      default="true"/>
+
+    <aura:attribute name="myTeam"           type="Boolean"      default="false"/>
+
+    <aura:html tag="style">
+        
+    </aura:html>
+
+    <div aura:id="body" class="{!v.isMobile ? 'slds slds-box mobile' : 'slds slds-box mobile'}" style="background-color:#FFF;position:relative;">
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner alternativeText="Loading" size="small" aura:id="spinnerChart"/>
+        </aura:if>
+        <h2 class="header-title-container">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_3-of-4">
+                    <span class="slds-text-heading--small slds-truncate" title="">
+                        <aura:if isTrue="{! !v.isMobile}">
+                            <lightning:icon iconName="custom:custom25" size="medium"/><b style="font-size: medium;">{!$Label.c.CALEANDER_LAB_MYACTIVITIES}</b>
+                            <aura:set attribute="else">
+                                <lightning:icon iconName="custom:custom25" size="small"/><b>{!$Label.c.CALEANDER_LAB_MYACTIVITIES}</b>
+                            </aura:set>
+                        </aura:if>
+                    </span>
+                </div>
+                <div class="slds-col slds-size_1-of-4" style="padding: 0;">
+                    <!-- <lightning:button label="{!$Label.c.CALEANDER_LAB_MYTEAM}" title="My Team" onclick="{!c.getMyTeam}" class="myTeamBtn"/> -->
+                    <lightning:input type="toggle" label="{!$Label.c.CALEANDER_LAB_MYTEAM}" name="My Team" checked="{!v.myTeam}" onchange="{!c.getMyTeam}"/>
+                </div>
+            </div>
+        </h2>
+        <div class="{!v.hasLine ? 'body-container hasLine' : 'body-container'}">
+            <div class="slds-align_absolute-center slds-p-bottom_large">
+                <div id="cal" class="calendar">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size--1-of-3">
+                            <lightning:buttonGroup>
+                                <lightning:buttonIcon iconName="utility:chevronleft" variant="border" alternativeText="Prev" onclick="{!c.prevMonth}"/>
+                                <lightning:buttonIcon iconName="utility:chevronright" variant="border" alternativeText="Next" onclick="{!c.nextMonth}"/>
+                            </lightning:buttonGroup>
+                        </div>
+                        <div class="slds-col slds-size--1-of-3 slds-align_absolute-center slds-wrap">
+                            <h2 class="header-title-container">
+                                <ui:outputText aura:id="header" class="slds-text-heading_small slds-truncate" value="{!v.yearMonth}" />
+                            </h2>
+                        </div>
+                        <lightning:layout class="slds-size--1-of-3 chkfield" multipleRows="true">
+                            <lightning:layoutItem size="12">
+                                <div class="legend">
+                                    <span class='event' style="font-size:80%; margin-right:5px; font-weight:bold;">{!$Label.c.CALEANDER_LAB_EVENT}</span>
+                                    <lightning:input type="checkbox" aura:id="box_event" onchange="{!c.handleChange}" class="event-checkbox legend-input" checked="{!v.default_event}" variant="label-hidden"/>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="12">
+                                <div class="legend">
+                                    <span class='task' style="font-size:80%; margin-right:5px; font-weight:bold;">{!$Label.c.CALEANDER_LAB_TASK}</span>
+                                    <lightning:input type="checkbox" aura:id="box_task" onchange="{!c.handleChange}" class="task-checkbox legend-input" checked="{!v.default_task}" variant="label-hidden"/>
+                                </div>
+                            </lightning:layoutItem>
+                            <!--
+                            <lightning:layoutItem size="12">
+                                <div class="legend">
+                                    <span class='plan' style="font-size:80%; margin-right:5px; font-weight:bold;">{!$Label.c.CALEANDER_LAB_ACCPLAN}</span>
+                                    <lightning:input type="checkbox" aura:id="box_accPlan" onchange="{!c.handleChange}" class="accPlan-checkbox legend-input" checked="{!v.default_accPlan}" variant="label-hidden"/>
+                                </div>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="12">
+                                <div class="legend">
+                                    <span class='activityN' style="font-size:80%; margin-right:5px; font-weight:bold;">{!$Label.c.CALEANDER_LAB_OPPTYACTIVITY}</span>
+                                    <lightning:input type="checkbox" aura:id="box_opptyAct" onchange="{!c.handleChange}" class="opptyAct-checkbox legend-input" checked="{!v.default_opptyAct}" variant="label-hidden"/>
+                                </div>
+                            </lightning:layoutItem>
+							--> 
+                        </lightning:layout>
+                    </div>
+                    <div class="slds-p-top_x-small" style="padding-bottom:1px;">
+                        <table id="days">
+                            <tr class="slds-text-title--caps">
+                                <td><span style="color:red">{!$Label.c.CALEANDER_LAB_SUN}</span></td>
+                                <td>{!$Label.c.CALEANDER_LAB_MON}</td><td>{!$Label.c.CALEANDER_LAB_TUE}</td>
+                                <td>{!$Label.c.CALEANDER_LAB_WED}</td><td>{!$Label.c.CALEANDER_LAB_THU}</td>
+                                <td>{!$Label.c.CALEANDER_LAB_FRI}</td><td><span style="color:red">{!$Label.c.CALEANDER_LAB_SAT}</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div aura:id="cal-frame" id="cal-frame">
+                        <table class="curr"> 
+                            <tbody> 
+                                <tr><td class="nil"></td><td class="nil"></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr> 
+                                <tr><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td class="today">11</td><td>12</td></tr> 
+                                <tr><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td></tr> 
+                                <tr><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td></tr> 
+                                <tr><td>27</td><td>28</td><td>29</td><td>30</td><td class="nil"></td><td class="nil"></td><td class="nil"></td></tr> 
+                            </tbody> 
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{! !v.isMobile}"> <!-- PC 화면-->
+            <div class="" style="height: 190px;border-top: 1px solid #D3DBDA;border-bottom: 1px solid #D3DBDA;">
+                <span id="s1" style="height:5%;">{!v.selectedDate}</span>
+                <div class="slds-scrollable" style="width:100%;height:95%;"> <!-- slds-scrollable_y-->
+                    <table class="slds-table slds-table--bordered table_calresult" style="table-layout: fixed;">
+                        <colgroup>
+                            <col width="20%"/><col width="22%"/><col width="28%"/><col width="30%"/>
+                        </colgroup>
+                        <thead>
+                            <tr class="slds-text-title--caps">
+                                <th>
+                                    <div class="slds-truncate" style="padding: .5rem;" title="Type">{!$Label.c.CALEANDER_LAB_TYPE}</div> <!-- Type -->
+                                </th>
+                                <th>
+                                    <div class="slds-truncate" style="padding: .5rem;" title="Owner">{!$Label.c.CALEANDER_LAB_OWNER}</div> <!-- Owner -->
+                                </th>
+                                <th>
+                                    <div class="slds-truncate" style="padding: .5rem;" title="Subject">{!$Label.c.CALEANDER_LAB_SUBJECT}</div> <!-- Subject -->
+                                </th>
+                                <th>
+                                    <div class="slds-truncate" style="padding: .5rem;" title="Related_To">{!$Label.c.CALEANDER_LAB_RELATEDTO}</div> <!-- Related To -->
+                                </th>
+                            </tr>
+                        </thead>
+                        <!--table body start, Iterate contact list as a <tr> -->
+                        <tbody>
+                            <aura:iteration items="{!v.todays}" var="item">
+                                <tr>
+                                    <td data-label="Type">
+                                       <div class="slds-truncate" title="{!item.type}"> <span class="{! 'badge ' + item.realType}">&nbsp;</span>{!item.type}</div>
+                                    </td>
+                                    <td data-label="Owner" style="text-align: center;">
+                                        <div class="slds-truncate" title="{!item.ownerName}">{!item.ownerName}</div>
+                                    </td>
+                                    <td data-label="Subject">
+                                        <div class="slds-truncate" title="{!item.subject}"><a href="javascript:void(0);" onclick="{!c.gotoActivity}" id="{!item.id}">{!item.subject}</a></div>
+                                    </td>
+                                    <td data-label="Related To">
+                                        <div class="slds-truncate" title="{!item.related}">
+                                            <a href="javascript:void(0);" onclick="{!c.gotoActivity}" id="{!item.relatedId}">{!item.related}</a>                                        
+                                        </div>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                            <aura:if isTrue="{!empty( v.todays)}">
+                                <tr>
+                                    <td colspan="5" style="text-align:center">
+                                        {!$Label.c.CALEANDER_LAB_NORESULT}
+                                    </td>
+                                </tr>
+                            </aura:if>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <aura:set attribute="else">
+                <aura:iteration items="{!v.todays}" var="item">
+                    <lightning:card class="mobile-card">
+                        <aura:set attribute="title">
+                            <div class="slds-truncate">
+                                <lightning:icon iconName="custom:custom18" size="small"/>&nbsp;
+                                <a href="javascript:void(0);" onclick="{!c.gotoActivity}" id="{!item.id}">{!item.subject}</a>
+                            </div>
+                        </aura:set>
+                        <div class="slds-tile__detail">
+                            <dl class="slds-list_horizontal slds-wrap">
+                                <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Type">{!$Label.c.CALEANDER_LAB_TYPE}:</dt>
+                                <dd class="slds-item_detail slds-truncate" title="{!item.type}">{!item.type}</dd>
+                                <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Owner">{!$Label.c.CALEANDER_LAB_OWNER}:</dt>
+                                <dd class="slds-item_detail slds-truncate" title="{!item.subject}">{!item.ownerName}</dd>
+                                <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Related_To">{!$Label.c.CALEANDER_LAB_RELATEDTO}:</dt>
+                                <dd class="slds-item_detail slds-truncate" title="{!item.related}">
+                                    <a href="javascript:void(0);" onclick="{!c.gotoActivity}" id="{!item.relatedId}">{!item.related}</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </lightning:card>
+                </aura:iteration>
+            </aura:set>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

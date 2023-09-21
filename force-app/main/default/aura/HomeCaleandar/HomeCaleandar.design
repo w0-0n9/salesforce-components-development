@@ -1,0 +1,7 @@
+<design:component>
+	<design:attribute name="hasLine" label="hasLine" />
+	<design:attribute name="default_event" label="Event" />
+	<design:attribute name="default_task" label="Task" />
+	<design:attribute name="default_accPlan" label="Account Plan" />
+	<design:attribute name="default_opptyAct" label="Opportunity Activity" />
+</design:component>

@@ -1,0 +1,36 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 07-17-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <lightning-card title="Login User Info" icon-name="standard:user">
+        <div class="slds-m-around_medium slds-list_horizontal slds-wrap">
+            <table class="slds-table slds-table_bordered slds-table_fixed-layout" border="1px solid"
+                bordercolor="#dddbda" role="grid">
+                <tr>
+                    <th style="background:#f3f2f2;">Id</th>
+                    <td>{userId}</td>
+                </tr>
+                <tr>
+                    <th style="background:#f3f2f2;">Name</th>
+                    <td>{userName}</td>
+                </tr>
+                <tr>
+                    <th style="background:#f3f2f2;">Company</th>
+                    <td>{userRoleName}</td>
+                </tr>
+                <tr>
+                    <th style="background:#f3f2f2;">Profile</th>
+                    <td>{userProfileName}</td>
+                </tr>
+                <tr>
+                    <th style="background:#f3f2f2;">Email</th>
+                    <td>{userEmail}</td>
+                </tr>
+            </table>
+        </div>
+    </lightning-card>
+</template>

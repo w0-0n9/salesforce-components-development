@@ -1,0 +1,9 @@
+.THIS .slds-var-p-top_xx-small {
+    min-height: 150px;
+}
+
+.THIS .slds-card__body .slds-card__body_inner {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

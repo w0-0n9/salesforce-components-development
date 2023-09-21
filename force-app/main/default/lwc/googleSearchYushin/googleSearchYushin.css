@@ -1,0 +1,27 @@
+.element {
+    color: #00006c;
+    font-size: 15px;
+}
+
+.url-header {
+    font-weight: bold;
+    font-size: 15px;
+    color: #00002f;
+    background-color: #f7f5f5;
+}
+
+.url-container {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.url-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #003768;
+}
+
+.url-container .slds-item:hover {
+    background-color: #f3f3f3;
+    cursor: pointer;
+  }

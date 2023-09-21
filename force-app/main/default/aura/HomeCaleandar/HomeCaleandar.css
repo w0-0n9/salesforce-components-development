@@ -1,0 +1,187 @@
+.THIS {
+    padding: 0;
+}
+
+.THIS .calendar {
+    width: 100%;
+}
+
+.THIS #cal tr {
+    border-bottom : solid 0.25px #D3DBDA;
+}
+
+.THIS #cal td {
+    height: 35px;
+    width: 14.3%;
+    text-align:center;
+}
+
+.THIS .event {
+    color : #EDC779; /* #F67A42; */
+    cursor: pointer;
+    /* display: inline-block; */
+    padding-left: 5px;
+}
+.THIS input[type=checkbox]:checked.event-checkbox{
+    border-color: #EDC779; /* #F67A42; */
+    background-color: #EDC779; /* #F67A42; */
+}
+.THIS input[type=checkbox].event-checkbox{
+    border-color: #EDC779; /* #F67A42; */
+}
+
+.THIS .task {
+    color : #D77F6E; /* blue; */
+    cursor: pointer;
+    /* display: inline-block; */
+    padding-left: 5px;
+}
+.THIS input[type=checkbox]:checked.task-checkbox{
+    border-color: #D77F6E; /* blue; */
+    background-color: #D77F6E; /* blue; */
+}
+.THIS input[type=checkbox].task-checkbox{
+    border-color: #D77F6E; /* blue; */
+}
+
+.THIS .plan{
+    color : #73A598; /*  rgb(196, 188, 75); */
+    cursor: pointer;
+    /* display: inline-block; */
+    padding-left: 5px;
+}
+.THIS input[type=checkbox]:checked.accPlan-checkbox{
+    border-color: #73A598; /*  rgb(196, 188, 75); */
+    background-color: #73A598; /*  rgb(196, 188, 75); */
+}
+.THIS input[type=checkbox].accPlan-checkbox{
+    border-color: #73A598; /*  rgb(196, 188, 75); */
+}
+
+.THIS .activityN {
+    color : #A9BC8B; /* green; */
+    cursor: pointer;
+    /* display: inline-block; */
+    padding-left: 5px;
+}
+.THIS input[type=checkbox]:checked.opptyAct-checkbox{
+    border-color: #A9BC8B; /* green; */
+    background-color: #A9BC8B; /* green; */
+}
+.THIS input[type=checkbox].opptyAct-checkbox{
+    border-color: #A9BC8B; /* green; */
+}
+
+.THIS .payAlarm {
+    color : red;
+    cursor: pointer;
+    /* display: inline-block; */
+    padding-left: 5px;
+}
+.THIS input[type=checkbox]:checked.red-checkbox{
+    border-color: red;
+    background-color: red;
+}
+.THIS input[type=checkbox].red-checkbox{
+    border-color: red;
+}
+
+
+
+.THIS .slds-table thead > tr > th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.THIS > .header-title-container {
+    padding: 0.75rem;
+}
+.THIS > .header-title-container b {
+    font-size: 0.875rem;
+}
+.THIS > .header-title-container .slds-icon_container {
+    margin-right: 0.75rem;
+}
+.THIS .body-container {
+    padding: 0.75rem;
+}
+
+.THIS.mobile > .header-title-container {
+    background: rgb(243, 242, 242);
+}
+.THIS.mobile .body-container {
+    border-top: 1px solid rgb(221, 219, 218);
+    border-bottom: 1px solid rgb(221, 219, 218);
+}
+.THIS.mobile {
+    border: 0;
+}
+.THIS .mobile-card .slds-card__body {
+    padding: 0 1rem;
+}
+.THIS .mobile-card .slds-card__header h2 .slds-text-heading_small a {
+    font-size: 0.875rem;
+}
+.THIS .mobile-card .slds-card__header {
+    background-color: #fafbfc;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid #dedede;
+}
+
+/* hasLine */
+@media screen and (min-width: 48em) {
+    .THIS .hasLine #cal tr {
+        border-bottom: 0;
+    }
+    .THIS .hasLine #cal-frame tr td {
+        border: 1px solid #D3DBDA;
+        padding: 0.25rem 0.5rem 2rem 0.5rem;
+        text-align: left;
+    }
+}
+
+
+.THIS .legend-input{
+    float: right !important;
+}
+
+.THIS .legend {
+    width: 100% !important;
+    /* display:flex !important; */
+    text-align: right !important;
+}
+
+.THIS .setSelected{
+    background-color: rgba(229, 193, 197, 0.5); /* #E5C1C5; */
+}
+
+.THIS .setToday{
+    /* background-color: lightblue;  */
+    background-color: #B0C4DF;
+}
+
+.THIS table.table_calresult thead > tr > th{
+    text-align: center;
+}
+.THIS span.badge{
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    margin-right: 2px;
+}
+.THIS span.badge.Event{
+    background-color: #EDC779;
+}
+.THIS span.badge.Task{
+    background-color: #D77F6E;
+}
+.THIS span.badge.Acct{
+    background-color: #73A598;
+}
+.THIS span.badge.Oppty{
+    background-color: #A9BC8B;
+}
+
+.THIS.myTeamBtn{
+    font-size: small;
+}

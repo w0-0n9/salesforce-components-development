@@ -1,0 +1,39 @@
+<aura:component controller="WeeklyReportsController" access="global">
+
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="recordId" type="String" default="" />
+    <aura:attribute name="report" type="Object" default="{}" />
+    <aura:attribute name="order" type="Integer" default="1" />
+    <aura:attribute name="content" type="String" default="" />
+    <aura:attribute name="formats" type="List" default="[
+        'font', 'size', 'bold', 'italic', 'underline', 'strike', 'list', 'indent', 
+        'align', 'link', 'image', 'clean', 'table', 'header', 'color', 'background', 
+        'code', 'code-block', 'script', 'blockquote', 'direction'
+    ]" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:method name="clickSave" action="{!c.clickSave}" access="PUBLIC"/>
+
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <div>
+
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="slds-is-relative">
+                <lightning:spinner />
+            </div>
+        </aura:if>
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="6">
+                <lightning:input type="number" label="{!$Label.c.WEEKLY_OFFICE_REPORT_DISPLAY_ORDER}" value="{!v.order}" 
+                    variant="label-inline" class="slds-p-bottom_small"/> <!-- Display Order -->
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12">
+                <lightning:inputRichText label="{!$Label.c.WEEKLY_OFFICE_REPORT_ISSUE_DESCRIPTION}" formats="{!v.formats}" 
+                    variant="label-stacked" value="{!v.content}" shareWithEntityId="{!v.recordId}"> <!-- Issue Description -->
+                    <lightning:insertImageButton />
+                </lightning:inputRichText>        
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

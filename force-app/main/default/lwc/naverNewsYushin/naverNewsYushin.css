@@ -1,0 +1,20 @@
+.news-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #003768;
+}
+
+.news-date {
+    color: #555;
+    font-size: 12px;
+}
+
+.news-container {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.news-container .slds-item:hover {
+    background-color: #f3f3f3;
+    cursor: pointer;
+  }

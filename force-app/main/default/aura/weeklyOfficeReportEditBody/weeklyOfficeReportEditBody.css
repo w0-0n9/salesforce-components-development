@@ -1,0 +1,3 @@
+.THIS .slds-rich-text-area__content{
+    max-height: var(--lwc-sizeLarge,35rem) !important;
+}

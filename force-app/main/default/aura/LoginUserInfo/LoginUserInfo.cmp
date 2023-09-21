@@ -1,0 +1,32 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 07-07-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome" controller="LoginUserInfoController" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <aura:attribute name="userInfo" type="Map"/>
+    <aura:attribute name="lastLogin" type="String"/>
+
+    <article class="slds-card" style="height: 99.6px;">
+        <div class="slds-card__body">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <p class="slds-p-horizontal_small">
+                        <p class="slds-m-vertical_xx-small">{!$Label.c.LOGIN_LAB_NAME} : <lightning:formattedText value="{!v.userInfo.userName}"/></p>
+                        <p class="slds-m-vertical_xx-small">IP : <lightning:formattedText value="{!v.userInfo.loginIp}"/></p> 
+                        <p class="slds-m-vertical_xx-small">{!$Label.c.LOGIN_LAB_LASTLOGIN} : {!v.lastLogin}</p>
+                    </p>
+                </div>
+                <div class="slds-col">
+                    <p class="slds-p-horizontal_small" style="float: right;font-weight: bold;color: red">
+                        <p class="slds-m-vertical_xx-small">confidential</p>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </article>
+</aura:component>

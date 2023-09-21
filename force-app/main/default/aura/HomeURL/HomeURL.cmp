@@ -1,0 +1,51 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 07-10-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome" controller="HomeURLController" access="global" >
+	
+    <!-- [Handler] -->
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <!-- [Attribute] -->
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+    <aura:attribute name="urlList" type="List" default="[]" />
+
+    <lightning:card>
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner />
+            <aura:set attribute="else">
+                <lightning:layout multipleRows="true">
+                    <aura:iteration items="{!v.urlList}" var="url">
+                        <lightning:layoutItem padding="around-small" size="6">
+                            <!--<lightning:button label="Go to Google" onclick="{!c.navigateToGoogle}" />-->
+                            <lightning:formattedUrl value="{!url.Url}" label="{!url.Name}" tooltip="{!url.Name}" class="url" target="_blank"/>
+                        </lightning:layoutItem>
+                    </aura:iteration>            
+                </lightning:layout>
+            </aura:set>
+        </aura:if>
+    </lightning:card>
+
+    <!-- For Test -->
+    <article class="slds-card" style="height: 66.6px;">
+        <div class="slds-card__body">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <p class="slds-p-horizontal_small">
+                        <p class="slds-p-horizontal_small" style="float: right;font-weight: bold;color: red">
+                            <p class="slds-m-vertical_xx-small">Favorite Links</p>
+                        </p>
+                        <p><lightning:formattedUrl value="https://www.google.com" tooltip="Go to https://www.google.com" label="Click! Go to Google" target="_blank" ></lightning:formattedUrl></p>
+                        <p><lightning:formattedUrl value="https://www.samsungsds.com" tooltip="Go to https://www.samsungsds.com" label="Click! Go to Samsung SDS" target="_blank" ></lightning:formattedUrl></p> 
+                    </p>
+                </div>
+            </div>
+        </div>
+    </article>
+    <!-- For Test end-->
+
+</aura:component>

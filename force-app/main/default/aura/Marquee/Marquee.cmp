@@ -1,0 +1,48 @@
+<!--
+  @description       : 
+  @author            : masterK
+  @group             : 
+  @last modified on  : 07-25-2023
+  @last modified by  : masterK
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome" controller="MarqueeController" access="global" >
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="contentList" type="List" default="[]" />
+    <!--<aura:attribute name="contents" type="String"/> -->
+
+    <!--
+    <aura:set attribute="title">
+        <lightning:icon iconName="standard:report" size="medium"/>
+        <span class="slds-p-horizontal_small custom-title">Headlines</span>
+    </aura:set>
+    -->
+    
+    <div class="marquee">
+        <p style="position:relative;" id="tofloat">
+            <aura:iteration items="{!v.contentList}" var="content">
+                <aura:if isTrue="{!not(empty(content.Link__c))}">
+                    <lightning:formattedUrl value="{!content.Link__c}" label="{!content.Content__c}" tooltip="{!content.Content__c}" target="_blank"/> &nbsp;&nbsp;&nbsp;
+                    <aura:set attribute="else">
+                    ***** &nbsp;&nbsp;&nbsp; {!content.Content__c} &nbsp;&nbsp;&nbsp;
+                    </aura:set>
+                </aura:if>
+            </aura:iteration>
+        </p>
+    </div>
+
+    <!--
+    <div class="marquee">
+        <p>
+            <a title="Realize your vision SAMSUNG SDS" href="https://samsungsds.com" target="_blank">Realize your vision SAMSUNG SDS</a>
+        </p>
+    </div>
+    -->
+
+    <!--
+    <div class="marquee">
+        <p>{!v.contents}</p>    
+    </div>
+    -->
+    
+</aura:component>

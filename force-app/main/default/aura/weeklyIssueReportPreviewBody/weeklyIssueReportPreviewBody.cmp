@@ -1,0 +1,100 @@
+<aura:component
+    controller="WeeklyReportsController"
+    access="global">
+
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="reports" type="List" default="[]" />
+    <aura:attribute name="content" type="String" default="" />
+
+    <aura:attribute name="instanceUrl" type="String" default="" />
+    <aura:attribute name="emailBody" type="Aura.Component" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:method name="clickSend" action="{!c.clickSend}" access="PUBLIC"/>
+
+    <!--aura:html tag="style">
+        .preview-modal .modal-container {
+            width : 790px !important;
+            max-width: 790px !important;
+            min-width: 790px !important;
+        }
+    </aura:html-->
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <div>
+        <div aura:id="content-body">
+            <aura:if isTrue="{!v.showSpinner}">
+                <div class="slds-is-relative">
+                    <lightning:spinner />
+                </div>
+            </aura:if>
+            <aura:iteration items="{!v.reports}" var="report">
+                <div class="slds-p-bottom_x-small"> <!-- width: 740px !important; -->
+                    <table border="0" cellpadding="2" style="background-color: #F3F2F2;font-family:tahoma;font-size:10pt;border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;">
+                        <tr>
+                            <td style="width:150px;line-height:2.0rem;text-align:right;vertical-align:middle;font-weight:bold;white-space:nowrap;border-bottom: 1px solid black;padding-right:1rem;padding-left:1rem;">
+                                {!$Label.c.WEEKLY_ISSUE_REPORT_COL_NAME}
+                            </td>
+                            <td style="background-color:#ffffff;border: 1px solid black;line-height:2.0rem;padding-left:1rem;">
+                                <a href="{!v.instanceUrl+'/lightning/r/WeeklyReport__c/'+report.Id+'/view'}" target="_blank">{!report.Name}</a>
+                            </td>
+                            <td style="width:150px;line-height:2.0rem;text-align:right;vertical-align:middle;font-weight:bold;white-space:nowrap;border-bottom: 1px solid black;padding-right:1rem;padding-left:1rem;">
+                                {!$Label.c.WEEKLY_ISSUE_REPORT_DEPT_NAME}
+                            </td>
+                            <td style="background-color:#ffffff;border: 1px solid black;line-height:2.0rem;padding-left:1rem;">
+                                {!report.Department__c}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:150px;line-height:2.0rem;text-align:right;vertical-align:middle;font-weight:bold;white-space:nowrap;border-bottom: 1px solid black;padding-right:1rem;padding-left:1rem;">
+                                {!$Label.c.WEEKLY_ISSUE_REPORT_COL_OPPORTUNITY}
+                            </td>
+                            <td style="background-color:#ffffff;border: 1px solid black;line-height:2.0rem;padding-left:1rem;">
+                                <aura:if isTrue="{!report.Opportunity__c != undefined}">
+                                    <a href="{!v.instanceUrl+'/lightning/r/Opportunity/'+report.Opportunity__c+'/view'}" target="_blank">{!report.Opportunity__r.Name}</a>
+                                </aura:if>
+                            </td>
+                            <td style="width:150px;line-height:2.0rem;text-align:right;vertical-align:middle;font-weight:bold;white-space:nowrap;border-bottom: 1px solid black;padding-right:1rem;padding-left:1rem;">
+                                {!$Label.c.WEEKLY_ISSUE_REPORT_OWNER_NAME}
+                            </td>
+                            <td style="background-color:#ffffff;border: 1px solid black;line-height:2.0rem;padding-left:1rem;">
+                                {!report.Owner.Name}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:150px;line-height:2.0rem;text-align:right;vertical-align:middle;font-weight:bold;white-space:nowrap;border-bottom: 1px solid black;padding-right:1rem;padding-left:1rem;">
+                                {!$Label.c.WEEKLY_ISSUE_REPORT_COL_ACCOUNT}
+                            </td>
+                            <td width="50%" style="background-color:#ffffff;border: 1px solid black;line-height:2.0rem;padding-left:1rem;">
+                                <aura:if isTrue="{!report.Account_Name__r.Name != undefined}">
+                                    <a href="{!v.instanceUrl+'/lightning/r/Account/'+report.Account_Name__c+'/view'}" target="_blank">{!report.Account_Name__r.Name}</a>
+                                </aura:if>
+                            </td>
+                            <td style="width:150px;line-height:2.0rem;text-align:right;vertical-align:middle;font-weight:bold;white-space:nowrap;border-bottom: 1px solid black;padding-right:1rem;padding-left:1rem;">
+                                {!$Label.c.WEEKLY_ISSUE_REPORT_COL_REPORTDATE}
+                            </td>
+                            <td width="50%" style="background-color:#ffffff;border: 1px solid black;line-height:2.0rem;padding-left:1rem;">
+                                {!report.ReportingDate__c}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="line-height:2.0rem;text-align:left;vertical-align:middle;font-weight:bold;white-space:nowrap;border-bottom: 1px solid black;padding-left:1rem;">
+                                {!$Label.c.WEEKLY_ISSUE_REPORT_COL_ISSUE}
+                            </td>
+                            <td style="width:150px;line-height:2.0rem;text-align:right;vertical-align:middle;font-weight:bold;white-space:nowrap;border-bottom: 1px solid black;border-left: 1px solid black;padding-right:1rem;padding-left:1rem;">
+                                {!$Label.c.WEEKLY_ISSUE_REPORT_COL_ORDER}
+                            </td>
+                            <td width="50%" style="background-color:#ffffff;border: 1px solid black;line-height:2.0rem;padding-left:1rem;">
+                                <lightning:formattedNumber value="{!report.DisplayOrder__c}" maximumFractionDigits="0"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="background-color:#ffffff;border: 1px solid black;padding:1rem;">
+                                <lightning:formattedRichText class="rich-box" value="{!report.IssueDescription__c}"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </aura:iteration>
+        </div>
+    </div>
+</aura:component>

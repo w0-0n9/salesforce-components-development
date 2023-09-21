@@ -1,0 +1,123 @@
+<aura:component 
+    controller="GoogleNewsController"
+    access="global">
+
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="isMobile" type="Boolean"/>
+
+    <aura:attribute name="keyword01" type="String" default=""/>
+    <aura:attribute name="keyword02" type="String" default=""/>
+    <aura:attribute name="keyword03" type="String" default=""/>
+    <aura:attribute name="keyword04" type="String" default=""/>
+    <aura:attribute name="keyword05" type="String" default=""/>
+    <aura:attribute name="keyword06" type="String" default=""/>
+    <aura:attribute name="keyword07" type="String" default=""/>
+    <aura:attribute name="keyword08" type="String" default=""/>
+    <aura:attribute name="keyword09" type="String" default=""/>
+    <aura:attribute name="keyword10" type="String" default=""/>
+    
+    <aura:method name="clickSave" action="{!c.clickSave}" access="PUBLIC"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <div class="modal_body">
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="slds-is-relative">
+            	<lightning:spinner />
+            </div>
+        </aura:if>
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                <lightning:input aura:id="keyword01" label="label" value="{!v.keyword01}" variant="label-hidden"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                <lightning:input aura:id="keyword02" label="label" value="{!v.keyword02}" variant="label-hidden"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                <lightning:input aura:id="keyword03" label="label" value="{!v.keyword03}" variant="label-hidden"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                <lightning:input aura:id="keyword04" label="label" value="{!v.keyword04}" variant="label-hidden"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                <lightning:input aura:id="keyword05" label="label" value="{!v.keyword05}" variant="label-hidden"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                <lightning:input aura:id="keyword06" label="label" value="{!v.keyword06}" variant="label-hidden"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                <lightning:input aura:id="keyword07" label="label" value="{!v.keyword07}" variant="label-hidden"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                <lightning:input aura:id="keyword08" label="label" value="{!v.keyword08}" variant="label-hidden"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                <lightning:input aura:id="keyword09" label="label" value="{!v.keyword09}" variant="label-hidden"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                <lightning:input aura:id="keyword10" label="label" value="{!v.keyword10}" variant="label-hidden"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+
+<!--
+    <div class="{!v.isMobile ? 'modal-main mobile' : 'modal-main'}">
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner />
+        </aura:if>
+
+        <section class="modal slds-modal slds-fade-in-open slds-modal_small">
+            <div class="slds-modal__container modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="add-po-heading" class="slds-text-heading_medium slds-hyphenate">News Keywords</h2>
+                </header>
+
+                <div class="slds-modal__content modal__content slds-p-around_medium slds-scrollable_y" id="modal-content">
+                    <div class="modal_body">
+                        <lightning:layout multipleRows="true">
+                            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                                <lightning:input aura:id="keyword01" label="label" value="{!v.keyword01}" variant="label-hidden"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                                <lightning:input aura:id="keyword02" label="label" value="{!v.keyword02}" variant="label-hidden"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                                <lightning:input aura:id="keyword03" label="label" value="{!v.keyword03}" variant="label-hidden"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                                <lightning:input aura:id="keyword04" label="label" value="{!v.keyword04}" variant="label-hidden"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                                <lightning:input aura:id="keyword05" label="label" value="{!v.keyword05}" variant="label-hidden"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                                <lightning:input aura:id="keyword06" label="label" value="{!v.keyword06}" variant="label-hidden"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                                <lightning:input aura:id="keyword07" label="label" value="{!v.keyword07}" variant="label-hidden"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                                <lightning:input aura:id="keyword08" label="label" value="{!v.keyword08}" variant="label-hidden"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                                <lightning:input aura:id="keyword09" label="label" value="{!v.keyword09}" variant="label-hidden"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="horizontal-small" class="slds-p-top_xx-small" size="12">
+                                <lightning:input aura:id="keyword10" label="label" value="{!v.keyword10}" variant="label-hidden"/>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </div>
+				</div>
+
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.clickCancel}"/>
+                    <lightning:button variant="brand" label="Save" onclick="{!c.clickSave}" />
+                </footer>
+            </div>
+        </section>
+
+    </div>  
+ -->
+</aura:component>

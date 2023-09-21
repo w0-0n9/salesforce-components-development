@@ -1,0 +1,45 @@
+<aura:component
+	controller="WeeklyReportsController"
+	access="global">
+
+	<aura:attribute name="showSpinner" type="Boolean" default="false" />
+	<aura:attribute name="recipients" type="List" default="[]" />
+	<aura:attribute name="subject" type="String" default="" />
+	<aura:attribute name="reportIds" type="List" default="[]" />
+	<aura:attribute name="contents" type="String" default="" />
+	<aura:attribute name="comments" type="String" default="" />
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:method name="clickSend" action="{!c.clickSend}" access="PUBLIC"/>
+
+	<lightning:overlayLibrary aura:id="overlayLib"/>
+
+	<div aura:id="modal-body" style="position:relative;">
+		<aura:if isTrue="{!v.showSpinner}">
+			<lightning:spinner aura:id="custom-spinner" />
+		</aura:if>
+		<lightning:layout multipleRows="true" pullToBoundary="medium">
+			<lightning:layoutItem size="12" padding="horizontal-small">
+				<c:customLookup
+					objectName="Employee__c"
+					iconName="standard:client"
+					label="{!$Label.c.WEEKLY_ISSUE_REPORT_EMPLOYEE}"
+					selectedRecords="{!v.recipients}"
+					additionalDisplay="Employee_Info__c, EvMailAddr__c"
+					filterFields="EvUniqID__c, EvMailAddr__c"
+					filterValues="null, null"
+					filterConditions="ne, ne"
+					minimum="2"
+					numOfQuery="50"
+					lookupType="Base"
+					enableMultiRecord="true" />
+			</lightning:layoutItem> <!-- Select Recipients -->
+			<lightning:layoutItem size="12" padding="horizontal-small">
+				<lightning:input label="{!$Label.c.WEEKLY_ISSUE_REPORT_SUBJECT}" value="{!v.subject}" /> <!-- Subject -->
+			</lightning:layoutItem>
+			<lightning:layoutItem size="12" padding="around-small">
+				<lightning:textarea value="{!v.comments}" label="{!$Label.c.WEEKLY_ISSUE_REPORT_COMMENTS}" class="comment-box"/> <!-- Comments }-->
+			</lightning:layoutItem>
+		</lightning:layout>
+	</div>
+</aura:component>

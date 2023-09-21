@@ -1,0 +1,46 @@
+<aura:component
+    controller="WeeklyReportsController" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global">
+
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="isMobile" type="Boolean" default="false" />
+    <aura:attribute name="firstRender" type="Boolean" default="true" />
+    <aura:attribute name="bodyHeight" type="Integer" default="200" />
+    <aura:attribute name="gridHeight" type="Integer" default="100" />
+
+    <aura:attribute name="reportDate" type="Date" default="" />
+    <aura:attribute name="hasReports" type="Boolean" default="false" />
+    <aura:attribute name="weeklyReports" type="List" default="[]" />
+
+    <aura:attribute name="editBody" type="Aura.Component" />
+    <aura:attribute name="previewBody" type="Aura.Component" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+
+    <aura:attribute name="cTab" type="String" default="" />
+    <aura:attribute name="mDate" type="Date" default="" />
+    
+    <aura:handler name="WeeklyReportEvent" event="c:WeeklyReportEvent" action="{!c.WeeklyReportEventHandle}"/>
+    <aura:handler name="WeeklyIssueReportEvent" event="c:WeeklyIssueReportEvent" action="{!c.WeeklyIssueReportEventHandle}"/>
+    <aura:handler name="WeeklyTeamReportEvent" event="c:WeeklyTeamReportEvent" action="{!c.WeeklyTeamReportEventHandle}"/>
+    <aura:handler name="WeeklyOfficeReportEvent" event="c:WeeklyOfficeReportEvent" action="{!c.WeeklyOfficeReportEventHandle}"/>
+
+    <div aura:id="main-box" class="slds">
+        <div aura:id="mainPage" class="slds-modal__container full-size">
+            <lightning:tabset>
+                <lightning:tab label="{!$Label.c.WEEKLY_ISSUE_REPORT_TITLE_WEEKLY}" aura:id="partTab" onactive="{!c.selectWeeklyReport}">
+                    <c:WeeklyReportBody aura:id='WeeklyReportBody' bodyHeight="{!v.bodyHeight}" gridHeight="{!v.gridHeight}" />
+                </lightning:tab>
+                <lightning:tab label="{!$Label.c.WEEKLY_ISSUE_REPORT_TITLE}" aura:id="groupTab" onactive="{!c.selectWeeklyIssueReport}">
+                    <c:WeeklyIssueReportBody aura:id='WeeklyIssueReportBody' bodyHeight="{!v.bodyHeight}" gridHeight="{!v.gridHeight}" />
+                </lightning:tab>
+                <lightning:tab label="{!$Label.c.WEEKLY_TEAM_REPORT_TITLE}" aura:id="teamTab" onactive="{!c.selectWeeklyTeamReport}">
+                    <c:WeeklyTeamReportBody aura:id='WeeklyTeamReportBody' bodyHeight="{!v.bodyHeight}" gridHeight="{!v.gridHeight}" />
+                </lightning:tab>
+                <lightning:tab label="{!$Label.c.WEEKLY_OFFICE_REPORT_TITLE}" aura:id="officeTab" onactive="{!c.selectWeeklyOfficeReport}">
+                    <c:WeeklyOfficeReportBody aura:id='WeeklyOfficeReportBody' bodyHeight="{!v.bodyHeight}" gridHeight="{!v.gridHeight}" />
+                </lightning:tab>
+            </lightning:tabset>
+        </div>
+    </div>
+</aura:component>

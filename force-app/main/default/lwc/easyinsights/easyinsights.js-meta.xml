@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="easyinsights">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Default</target>   
+      </targets>
+    
+    <!-- Configuring the design attributes -->
+          <targetConfigs>
+            <targetConfig targets="lightning__RecordPage, lightningCommunity__Default, lightning__AppPage, lightning__HomePage">
+    
+                <property name="title" type="String" default="고객 핵심 정보" label="Title"/>
+                <property name="icon" type="String" default="standard:goals" label="Icon"/>
+    
+                <property name="metric1_title" type="String" default="[고객 만족도]" label="Metric 1 title"/>
+                <property name="metric1_value" type="String" default="0.0" label="Metric 1 value"/>
+                <property name="metric1_cb" type="Boolean" default="true" label="Use value from eivalue1__c field"/>
+    
+                <property name="metric2_title" type="String" default="[신규 상담]" label="Metric 2 title"/>
+                <property name="metric2_value" type="String" default="0" label="Metric 2 value"/>
+                <property name="metric2_cb" type="Boolean" default="true" label="Use value from eivalue2__c field"/>
+    
+                <property name="metric3_title" type="String" default="[신규 작업]" label="Metric 3 title"/>
+                <property name="metric3_value" type="String" default="0" label="Metric 3 value"/>
+                <property name="metric3_cb" type="Boolean" default="true" label="Use value from eivalue3__c field"/>
+    
+                <property name="metric4_title" type="String" default="[멤버십 가입]" label="Metric 4 title"/>
+                <property name="metric4_value" type="String" default="가입대기" label="Metric 4 value"/>
+                <property name="metric4_cb" type="Boolean" default="true" label="Use value from eivalue4__c field"/>
+    
+              </targetConfig>
+          </targetConfigs>
+
+</LightningComponentBundle>

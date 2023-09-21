@@ -1,0 +1,31 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 07-25-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <lightning-card title="Naver News Search" icon-name="standard:news">
+        <div class="slds-align_absolute-center">
+            <input type="text" label="Search News" value={searchTerm} onchange={handleSearchTermChange} class="slds-input" />
+            <button class="slds-button slds-button_brand" onclick={searchNews}>Search</button>
+        </div>
+        <br>
+        
+        <div class="news-container">
+            <template if:true={newsList}>
+                <ul class="slds-has-dividers_top slds-has-block-links_space">
+                    <template for:each={newsList} for:item="news">
+                        <li class="slds-item url-element" key={news.link}>
+                            <a href={news.link} target="_blank">
+                                <span class="news-title">{news.title}</span>
+                            </a>
+                            <p class="news-date slds-m-left_x-small">Published Date: {news.pubDate}</p>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+    </lightning-card>
+</template>

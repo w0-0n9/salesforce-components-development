@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="WeeklyTeamReportEvent">
+    <aura:attribute type="Date" name="WeeklyTeamReportDate"/>
+    <aura:attribute type="String" name="Tab"/>
+</aura:event>

@@ -1,0 +1,169 @@
+<aura:component controller="GoogleNewsController" implements="flexipage:availableForRecordHome,force:hasSObjectName,force:hasRecordId" access="global">
+
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="isMobile" type="Boolean"/>
+    <aura:attribute name="displayType" type="String"/>
+
+    <aura:attribute name="hasNews" type="Boolean" default="false"/>
+    <aura:attribute name="googleNews" type="List" default="[]"/>
+    <!-- <aura:method name="clickRefresh" action="{!c.clickRefresh}" access="PUBLIC"/> -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="{!v.isMobile ? 'custom-news mobile' : 'custom-news'}">
+        <article class="slds-card slds-card_boundary">
+            <aura:if isTrue="{!v.showSpinner}">
+                <lightning:spinner />
+            </aura:if>
+
+           <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <span class="assistiveText">News</span>
+                        <div class="small forceEntityIcon" style="background-color: #54698d">
+                            <span class="uiImage">
+                                <img src="/img/icon/t4v35/standard/news_60.png" class="icon " alt="" title=""/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="custom-card-header">
+                            <span class="slds-card__header-title slds-truncate" title="News">{!$Label.c.GOOGLENEWS_TITLE2} 
+                                <aura:if isTrue="{!v.hasNews}">({!v.googleNews.length})</aura:if>
+                            </span>
+                        </h2>
+                    </div>
+                    <div class="slds-media__figure">
+                        <lightning:buttonGroup >
+                            <lightning:buttonIcon iconName="utility:refresh" onclick="{!c.doInit}" />
+                        </lightning:buttonGroup>
+                    </div>                    
+                </header>
+                <div class="slds-no-flex"></div>
+            </div>
+
+            <div class="slds-card__body slds-card__body--inner">
+                <div class="desktop">
+                    <aura:if isTrue="{!not(v.hasNews)}">
+                        <div class="emptyMessage">No news items are available at this time.</div>
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{!v.displayType == 'Carousel'}">
+                                <div class="desktopContainer witsNewsCardsContainer">
+                                    <div class="contentContainer">
+                                        <div class="scrollerContainer">
+                                            <div aura:id="scroller-wrapper" class="newsScroller uiScroller scroller-wrapper scroll-horizontal">
+                                                <div aura:id="scroller-content" class="scrollerContent scroller">
+                                                    <ul>
+                                                        <aura:iteration items="{!v.googleNews}" var="news">
+                                                            <li>
+                                                                <article class="carouselView articleDesktop witsNewsCarouselItem">
+                                                                    <div class="headerBodyContainer">
+                                                                        <a class="articleContainer" href="{!news.Url}" target="_blank" title="{!news.Url}">
+                                                                            <div class="newsBody">
+                                                                                <div class="newsContent narrow">
+                                                                                    <h3 class="title">{!news.Title}</h3>
+                                                                                </div>
+                                                                            </div>
+                                                                        </a>
+                                                                        <div class="sourceAttribution">
+                                                                            <div class="subTitle">{!news.Publisher}</div>
+                                                                            <div class="matchedAccount">
+                                                                                <span>,&nbsp;news.google.com</span>
+                                                                                <span class="dash">,&nbsp;</span>
+                                                                                <!--span class="sourceDate">{!news.AsOfDay}</span-->
+                                                                                <span class="sourceDate">{!news.PublishDate}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <aura:if isTrue="{!news.hasImage}">
+                                                                            <a href="{!news.Url}" target="_blank" title="{!news.Url}">
+                                                                                <div class="imageContainer witsNewsArticleImage">
+                                                                                    <div class="newsImageWrapper">
+                                                                                        <span class="uiImage">
+                                                                                            <img src="{!news.ImgUrl}" class="newsImage" alt="News"/>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                            <aura:set attribute="else">
+                                                                                <a class="abstract" href="{!news.Url}" target="_blank" title="{!news.Url}">{!news.Description}</a>
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </div>
+                                                                    <div class="newsFooter">
+                                                                        <!--lightning:buttonGroup>
+                                                                            <lightning:buttonIcon iconName="utility:share" variant="bare" title="Share news item"/>
+                                                                            <lightning:buttonIcon iconName="utility:priority" variant="bare" title="Flag for Review"/>
+                                                                        </lightning:buttonGroup-->
+                                                                    </div>
+                                                                </article>
+                                                            </li>
+                                                        </aura:iteration>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.displayType == 'List'}">
+                                <div class="newsMainContainer witsNews">
+                                    <ui:scrollerWrapper class="witsNewsList panel">
+                                        <ol class="visible">
+                                            <aura:iteration items="{!v.googleNews}" var="news">
+                                                <li>
+                                                    <article class="listView articleDesktop witsNewsListItem">
+                                                        <div class="articleContainer" data-aura-rendered-by="3071:0">
+                                                            <div class="newsBody extraWide" data-aura-rendered-by="3072:0">
+                                                                <aura:if isTrue="{!news.hasImage}">
+                                                                    <a class="newsArticleImageContainer" href="{!news.Url}" target="_blank" title="{!news.Url}">
+                                                                        <div class="wideImageContainer witsNewsArticleImage" >
+                                                                            <div class="wideNewsImageWrapper">
+                                                                                <span class="uiImage">
+                                                                                    <img src="{!news.ImgUrl}" class="wideNewsImage" alt="News"/>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>    
+                                                                </aura:if>
+                                                                <div class="newsContent" data-aura-rendered-by="3075:0">
+                                                                    <a class="title" href="{!news.Url}" target="_blank" title="{!news.Url}">{!news.Title}</a>
+                                                                    <div class="subTitle">
+                                                                        <span>{!news.Publisher}</span>
+                                                                        <span>,&nbsp;news.google.com</span>
+                                                                        <span class="dash">,&nbsp;</span>
+                                                                        <!--span class="sourceDate">{!news.AsOfDay}</span-->
+                                                                        <span class="sourceDate">{!news.PublishDate}</span>
+                                                                    </div>
+                                                                    <a class="abstract" href="{!news.Url}" target="{!news.Url}">{!news.Description}</a>
+                                                                    <div class="actionButtons">
+                                                                        <!--lightning:buttonGroup>
+                                                                            <lightning:buttonIcon iconName="utility:share" variant="bare" title="Share news item"/>
+                                                                            <lightning:buttonIcon iconName="utility:priority" variant="bare" title="Flag for Review"/>
+                                                                        </lightning:buttonGroup-->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                </li>
+                                            </aura:iteration>    
+                                        </ol>
+                                    </ui:scrollerWrapper>
+                                </div>
+                            </aura:if>                    
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </div>
+            
+            <div class="slds-card__footer">
+                <aura:if isTrue="{!and(v.displayType == 'Carousel', v.hasNews)}">
+                    <div style="width:100%;text-align:right;">
+                        &nbsp;
+                        <!--lightning:buttonIcon onclick="{!c.scrollLeft}" iconName="utility:chevronleft" variant="bare" class="slds-p-right_medium"/>
+                        <lightning:buttonIcon onclick="{!c.scrollRight}" iconName="utility:chevronright" variant="bare" class="slds-p-right_small"/-->
+                    </div>
+                </aura:if>
+            </div>
+        </article>
+    </div>
+</aura:component>

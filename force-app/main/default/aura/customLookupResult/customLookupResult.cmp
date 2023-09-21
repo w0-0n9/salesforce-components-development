@@ -1,0 +1,34 @@
+<aura:component access="global">
+	
+	<aura:attribute name="record" type="sObject" />
+	<aura:attribute name="iconName" type="string"/>
+	<aura:attribute name="additionalFields" type="string" default=""/>  
+
+	<aura:attribute name="additionalData" type="string"/>
+	<aura:attribute name="hasMeta" type="Boolean" default="false" />
+	<aura:attribute name="mataCss" type="String" default="" />
+
+
+	<!-- Register the component level event -->
+	<aura:registerEvent name="recordSelectedEvent" type="c:customLookupSelectedEvent"/>
+
+	<!-- Constructor -->
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />    
+
+	<!-- UI Body -->
+	<li role="presentation" class="slds-listbox__item" >
+		<span id="listbox-option-01" class="{!'slds-media slds-listbox__option slds-listbox__option_entity ' + v.metaCss}" role="option">
+			<span class="slds-media__figure">
+				<span class="slds-icon_container" title="Record's icon">
+					<lightning:icon iconName="{!v.iconName}" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+				</span>
+			</span>    
+			<span class="slds-media__body" onclick="{!c.selectRecord}">  
+				<span class="slds-listbox__option-text slds-listbox__option-text_entity">{!v.record.Name}</span>
+				<aura:if isTrue="{!v.hasMeta}">
+					<span class="slds-listbox__option-text slds-listbox__option-text_entity">{!v.additionalData}</span>
+				</aura:if>                   
+			</span>
+		</span>
+	</li>
+</aura:component>

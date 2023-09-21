@@ -1,0 +1,4 @@
+.THIS textarea {
+    max-height: var(--lwc-sizeLarge,35rem) !important;
+    min-height: var(--lwc-sizeLarge,35rem) !important;
+}

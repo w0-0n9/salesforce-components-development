@@ -1,0 +1,7 @@
+<aura:component>
+    <aura:attribute name="onsubmit" type="Aura.Action"/>
+    
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <lightning:button name="cancel" label="{!$Label.c.WEEKLY_TEAM_REPORT_BTN_CANCEL}" onclick="{!c.handleCancel}"/> <!-- Cancel -->
+    <lightning:button name="save" label="{!$Label.c.WEEKLY_TEAM_REPORT_BTN_SENDEMAIL}" variant="brand" onclick="{!c.handleSend}"/> <!-- Send Email -->
+</aura:component>

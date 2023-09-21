@@ -1,0 +1,72 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 07-25-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+
+<template>
+  <lightning-card title="Google Search" icon-name="standard:search">
+    <div class="slds-align_absolute-center">
+        <input type="text" value={searchTerm} onchange={handleSearchTermChange} class="slds-input" />
+        <button class="slds-button slds-button_brand" onclick={searchGoogle}>Search</button>
+    </div>
+    <br>
+    <div>
+      <template if:true={name}>
+        <div class="slds-align_absolute-center element">
+          Name: {name}
+        </div>
+      </template>
+      <template if:true={nativeName}>
+        <div class="slds-align_absolute-center element">
+          Native Name: {nativeName}
+        </div>
+      </template>
+      <template if:true={hqLoc}>
+        <div class="slds-align_absolute-center element">
+          HQ Location: {hqLoc}
+          <template if:true={hqLocCity}>
+            <span class="slds-m-left_xx-small"> {hqLocCity},</span>
+          </template>
+          <template if:true={hqLocCountry}>
+            <span class="slds-m-left_xx-small"> {hqLocCountry}</span>
+          </template>
+        </div>
+      </template>
+      <template if:true={revenue}>
+        <div class="slds-align_absolute-center element">
+          Revenue: {revenue} 
+          <template if:true={revenueYear}>
+            <span class="slds-m-left_xx-small">({revenueYear})</span>
+          </template>
+        </div>
+      </template>
+      <template if:true={numEmp}>
+        <div class="slds-align_absolute-center element">
+          Number of Employees: {numEmp} 
+          <template if:true={numEmpYear}>
+            <span class="slds-m-left_xx-small">({numEmpYear})</span>
+          </template>
+        </div>
+      </template>
+    </div>
+    <br>
+
+    <template if:true={searchResults}>
+      <div class="slds-border_top url-header slds-m-left_x-small">URLs</div>
+      <div class="url-container">
+        <ul class="slds-has-dividers_top slds-has-block-links_space">
+          <template for:each={searchResults} for:item="result">
+            <li class="slds-item" key={result.link}>
+              <a href={result.link} target="_blank">
+                <span class="url-title">{result.title}</span>
+              </a>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </template>
+  </lightning-card>
+</template>

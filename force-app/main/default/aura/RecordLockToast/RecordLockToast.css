@@ -1,0 +1,8 @@
+.THIS {
+}
+
+.THIS .lockButton {
+    width: auto;
+    min-width: 100%;
+    max-width: 100%;
+}

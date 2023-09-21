@@ -1,0 +1,95 @@
+<!--
+  @description       : 
+  @author            : masterK
+  @group             : 
+  @last modified on  : 07-26-2022
+  @last modified by  : masterK
+-->
+<template>
+    <article class="slds-card">
+        <div class="slds-card__header">
+            <div class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body slds-truncate">
+                    <h2><span class="slds-text-heading_small">
+                            <lightning-icon class="card-icon slds-icon_container" icon-name={icon} size="small">
+                            </lightning-icon>
+                            <span class="slds-m-left_small" style="font-weight:700">{title}</span>
+                        </span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="custbox slds-m-bottom_medium">
+            <lightning-layout>
+                <lightning-layout-item flexibility="auto" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                        <div class="custbox-title">
+                            {metric1_title}
+                        </div>
+                        <div class="custbox-value">
+                            <div class="custbox-value" if:false={metric1_cb}>
+                                    {metric1_value}
+                            </div>  
+                            <div class="custbox-value" if:true={metric1_cb}>
+                                <div if:true={record.data}>
+                                    {eimetric1}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                        <div class="custbox-title">
+                                {metric2_title}
+                        </div>
+                        <div class="custbox-value">
+                            <div class="custbox-value" if:false={metric2_cb}>
+                                    {metric2_value}
+                            </div>  
+                            <div class="custbox-value" if:true={metric2_cb}>
+                                <div if:true={record.data}>
+                                    {eimetric2}
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                        <div class="custbox-title">
+                                {metric3_title}
+                        </div>
+                        <div class="custbox-value">
+                            <div class="custbox-value" if:false={metric3_cb}>
+                                {metric3_value}
+                            </div>  
+                            <div class="custbox-value" if:true={metric3_cb}>
+                                <div if:true={record.data}>
+                                    {eimetric3}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" padding="around-small">
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                        <div class="custbox-title">
+                                {metric4_title}
+                        </div>
+                        <div class="custbox-value">
+                            <div class="custbox-value" if:false={metric4_cb}>
+                                    {metric4_value}
+                            </div>  
+                            <div class="custbox-value" if:true={metric4_cb}>
+                                <div if:true={record.data}>
+                                    {eimetric4}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </article>
+</template>

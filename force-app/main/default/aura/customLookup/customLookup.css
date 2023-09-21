@@ -1,0 +1,46 @@
+.THIS .leftPaddingClass {
+    padding-left: 2rem;
+}
+
+/* [ADD] customresult 영역이 모달사이즈 넘어갈때 모달사이즈 밖으로 보이게 하기위함 */
+.THIS .slds-modal__content {
+    overflow: visible;
+}
+
+.THIS .uiMenu {
+    position: relative;
+    width: 52px;
+}
+
+.THIS .uiMenu .slds-dropdown {
+    margin-left: -25px;
+}
+
+.THIS .uiInput-hide-border .slds-input {
+    border: 0px;
+}
+
+.THIS .uiMenu-image .slds-icon-text-default {
+    fill: rgb(255,255,255);
+}
+
+.THIS .uiMenu-image svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: .25rem;
+    background-color: #7f8de1;
+}
+
+.THIS .uiPill-single {
+    width: 100%;
+}
+
+/**
+ * BY MinGyoon Woo 2020-12-18
+ * 검색 결과에 스크롤바 표시
+ */
+
+.THIS ul.slds-dropdown_fluid {
+    max-height: 120px;
+    overflow-y: auto;
+}

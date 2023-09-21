@@ -1,0 +1,101 @@
+<aura:component controller="WeeklyReportsController" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="isMobile" type="Boolean" default="false" />
+    <aura:attribute name="firstRender" type="Boolean" default="true" />
+	<aura:attribute name="bodyHeight" type="Integer" default="200" />
+    <aura:attribute name="gridHeight" type="Integer" default="100" />
+    <aura:attribute name="reportDate" type="Date" default="" />
+    <aura:attribute name="hasReports" type="Boolean" default="false" />
+    <aura:attribute name="weeklyReports" type="List" default="[]" />
+
+    <aura:attribute name="editBody" type="Aura.Component" />
+    <aura:attribute name="previewBody" type="Aura.Component" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+
+    <aura:method name="getContent2" action="{!c.getContent2}"/>
+
+    <aura:attribute name="gDate" type="Date"/>
+    <aura:attribute name="tab" type="String" />
+    <aura:registerEvent name="WeeklyIssueReportEvent" type="c:WeeklyIssueReportEvent"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <lightning:card>
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="slds-is-relative">
+                <lightning:spinner />
+            </div>
+        </aura:if>
+        <aura:set attribute="title">
+            <lightning:icon iconName="standard:report" size="medium"/>
+            <span class="slds-p-horizontal_small custom-title">{!$Label.c.WEEKLY_ISSUE_REPORT_TITLE}</span> <!-- Issue Reports -->
+        </aura:set>
+        <aura:set attribute="actions">
+            <div class="slds-grid">
+                <lightning:input type="date" name="reportdate" label="Select" value="{!v.reportDate}" onchange="{!c.selectDate}" variant="label-hidden" style="padding-top:0;" class="slds-col slds-p-right_x-small"/>
+                <lightning:button label="{!$Label.c.WEEKLY_ISSUE_REPORT_PREVIEW}" onclick="{!c.clickPreview}" class="action-button slds-col"/> <!-- Preview -->
+                <lightning:buttonIcon iconName="utility:screen" onclick="{!c.clickFullScreen}"/>
+            </div>
+        </aura:set>
+        <p aura:id="contentBody" class="slds-p-around_small card-body">
+            <div aura:id="tableBody" class="slds-table_header-fixed_container table-body">
+                <div class="slds-scrollable_y" style="height:100%;">
+                    <table class="slds-table slds-table_bordered slds-table_header-fixed slds-table_fixed-layout">
+                        <thead>
+                            <tr class="slds-text-title--caps slds-grid">
+                                <th class="slds-col slds-size_1-of-12"><span class="slds-cell-fixed" style="padding: .5rem;" title="Name">{!$Label.c.WEEKLY_ISSUE_REPORT_COL_NAME}</span></th> <!-- Name -->
+                                <th class="slds-col slds-size_1-of-12"><span class="slds-cell-fixed" style="padding: .5rem;" title="Account">{!$Label.c.WEEKLY_ISSUE_REPORT_COL_ACCOUNT}</span></th> <!-- Account -->
+                                <th class="slds-col slds-size_1-of-12"><span class="slds-cell-fixed" style="padding: .5rem;" title="Opportunity">{!$Label.c.WEEKLY_ISSUE_REPORT_COL_OPPORTUNITY}</span></th> <!-- Opportunity -->
+                                <th class="slds-col slds-size_1-of-12"><span class="slds-cell-fixed" style="padding: .5rem;" title="Report Date">{!$Label.c.WEEKLY_ISSUE_REPORT_COL_REPORTDATE}</span></th> <!-- Report Date -->
+                                <th class="slds-col slds-size_7-of-12"><span class="slds-cell-fixed" style="padding: .5rem;" title="Issue">{!$Label.c.WEEKLY_ISSUE_REPORT_COL_ISSUE}</span></th> <!-- Issue -->
+                                <th class="slds-col slds-size_1-of-12 num-colhead"><span class="slds-cell-fixed" style="padding: .5rem;" title="Order">{!$Label.c.WEEKLY_ISSUE_REPORT_COL_ORDER}</span></th> <!-- Order -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.weeklyReports}" var="report">
+                                <tr class="slds-grid">
+                                    <td class="slds-col slds-size_1-of-12">
+                                        <div class="slds-truncate" title="{!report.Name}">
+                                            <a href="{!'/lightning/r/WeeklyReport__c/'+report.Id+'/view'}" target="_blank">
+                                                {!report.Name}
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="slds-col slds-size_1-of-12">
+                                        <aura:if isTrue="{!report.Account_Name__r.Name != undefined}">
+                                            <div class="slds-truncate" title="{!report.Account_Name__r.Account.Name}">
+                                                <a href="{!'/lightning/r/Account/'+report.Account_Name__c+'/view'}" target="_blank">
+                                                    {!report.Account_Name__r.Name}
+                                                </a>
+                                            </div>
+                                        </aura:if>
+                                    </td>
+                                    <td class="slds-col slds-size_1-of-12">
+                                        <aura:if isTrue="{!report.Opportunity__c != undefined}">
+                                            <div class="slds-truncate" title="{!report.Opportunity__r.Name}">
+                                                <a href="{!'/lightning/r/Opportunity/'+report.Opportunity__c+'/view'}" target="_blank">
+                                                    {!report.Opportunity__r.Name}
+                                                </a>
+                                            </div>
+                                        </aura:if>
+                                    </td>
+                                    <td class="slds-col slds-size_1-of-12">
+                                        <div class="slds-truncate" title="{!report.ReportingDate__c}"><lightning:formattedDateTime value="{!report.ReportingDate__c}"/></div>
+                                    </td>
+                                    <td class="slds-col slds-size_7-of-12" id="{!report.Id}" onclick="{!c.clickReport}">
+                                        <div class="slds-scrollable_y richtext-box" data-label="Issue Description"><lightning:formattedRichText class="rich-box" value="{!report.IssueDescription__c}"/></div>
+                                    </td>
+                                    <td class="slds-col slds-size_1-of-12 num-colcell">
+                                        <div class="slds-truncate" title="{!report.DisplayOrder__c}"><lightning:formattedNumber value="{!report.DisplayOrder__c}" maximumFractionDigits="0"/></div>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </p>
+    </lightning:card>
+</aura:component>
